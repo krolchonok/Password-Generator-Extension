@@ -4,17 +4,15 @@
 
 # Password Generator Chrome Extension
 
-A **secure password generator Chrome extension** that creates random passwords and checks their safety using the [Have I Been Pwned (HIBP) API](https://haveibeenpwned.com/). This extension ensures you can generate strong, uncompromised passwords directly from your browser.
+Расширение для генерации надёжных паролей прямо в браузере. Интерфейс переведён в тёмную тему и сосредоточен только на создании пароля с нужными вам параметрами.
 
 ## Features
 
-- Generate random passwords with customizable options:
-  - Include uppercase letters
-  - Include numbers
-  - Include symbols
-- Validate password security using the HIBP API.
-- Copy generated passwords to the clipboard for easy use.
-- Responsive interface with smooth loading transitions.
+- Генерация случайных паролей с настраиваемой длиной.
+- Опции включения заглавных букв, цифр и спецсимволов.
+- Быстрое копирование в буфер обмена.
+- Мини-кнопка внутри поля, которая генерирует и сразу подставляет пароль.
+- Компактный интерфейс в тёмной теме.
 
 ## Screenshots
 
@@ -43,10 +41,8 @@ A **secure password generator Chrome extension** that creates random passwords a
    - Enter the desired password length.
    - Select options to include uppercase letters, numbers, or symbols.
 3. Click **Generate** to create a password.
-4. View the security status of the generated password:
-   - **Password has been compromised!** indicates the password exists in a known data breach.
-   - **Password is safe!** indicates the password is unique.
-5. Use the **Copy** button to copy the password to your clipboard.
+4. Use the **Copy** button to copy the password to your clipboard.
+5. В поле результата появится небольшая кнопка при фокусе — нажмите её, чтобы мгновенно сгенерировать и подставить новый пароль.
 
 ## File Structure
 
@@ -66,7 +62,7 @@ password-generator-extension/
 - **assets/**: Contains icons and other media assets.
 - **popup.html**: The main HTML file for the extension interface.
 - **popup.css**: Styles for the extension interface.
-- **popup.js**: JavaScript logic for generating passwords and interacting with the HIBP API.
+- **popup.js**: JavaScript логика генерации паролей и копирования в буфер обмена.
 - **manifest.json**: Chrome extension configuration.
 
 ## Development
@@ -78,8 +74,8 @@ To modify or enhance the extension:
 ## Roadmap
 
 - Add options for storing and managing multiple passwords.
-- Implement a dark mode for the interface.
-- Include additional security checks using other APIs or algorithms.
+- Доработать дополнительные визуальные темы.
+- Добавить новые режимы генерации (например, только слова или только цифры).
 
 ## License
 
