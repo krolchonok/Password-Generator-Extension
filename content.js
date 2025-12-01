@@ -37,6 +37,29 @@ function generatePasswordString(length, options) {
   return password;
 }
 
+async function copyToClipboard(text) {
+  if (!text) return;
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return;
+    } catch (_) {
+      // fallback below
+    }
+  }
+
+  const textarea = document.createElement('textarea');
+  textarea.value = text;
+  textarea.setAttribute('readonly', '');
+  textarea.style.position = 'fixed';
+  textarea.style.top = '-9999px';
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand('copy');
+  document.body.removeChild(textarea);
+}
+
 function ensureFloatingButton() {
   if (floatingButton) return floatingButton;
 
@@ -59,12 +82,13 @@ function ensureFloatingButton() {
     hoveringButton = false;
   });
 
-  button.addEventListener('click', () => {
+  button.addEventListener('click', async () => {
     if (!activeInput) return;
     const password = generatePasswordString(DEFAULT_LENGTH, DEFAULT_OPTIONS);
     activeInput.value = password;
     activeInput.dispatchEvent(new Event('input', { bubbles: true }));
     activeInput.dispatchEvent(new Event('change', { bubbles: true }));
+    await copyToClipboard(password);
   });
 
   document.body.appendChild(button);
