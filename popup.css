@@ -1,16 +1,12 @@
 :root {
-  --bg: #020402;
-  --panel: #070b07;
-  --accent: #2bff88;
-  --accent-strong: #16c76d;
-  --accent-soft: rgba(43, 255, 136, 0.12);
-  --text: #d6f5d6;
-  --muted: #8fb78f;
-  --border: rgba(43, 255, 136, 0.35);
-  --glow: 0 0 18px rgba(43, 255, 136, 0.35), 0 0 2px rgba(43, 255, 136, 0.6);
-  --radius: 10px;
-  font-family: "SFMono-Regular", "Roboto Mono", "Fira Code", "Cascadia Mono", Menlo,
-    Consolas, monospace;
+  --bg: #f4f5f0;
+  --panel: #ffffff;
+  --text: #1f2a1f;
+  --muted: #556155;
+  --accent: #2f7a3f;
+  --border: #d7ddd3;
+  --radius: 8px;
+  font-family: "SFMono-Regular", "Roboto Mono", Menlo, Consolas, monospace;
 }
 
 * {
@@ -19,39 +15,13 @@
 
 body {
   margin: 0;
-  background: radial-gradient(circle at 20% 20%, rgba(43, 255, 136, 0.08), transparent 40%),
-    radial-gradient(circle at 80% 0%, rgba(22, 199, 109, 0.08), transparent 32%), var(--bg);
+  background: var(--bg);
   color: var(--text);
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 18px;
-  position: relative;
-  overflow: hidden;
-}
-
-body::before,
-body::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-body::before {
-  background: linear-gradient(
-      rgba(43, 255, 136, 0.03) 1px,
-      transparent 1px
-    );
-  background-size: 100% 3px;
-  mix-blend-mode: lighten;
-  opacity: 0.5;
-}
-
-body::after {
-  background: radial-gradient(circle, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.45));
-  mix-blend-mode: multiply;
 }
 
 .container {
@@ -59,40 +29,26 @@ body::after {
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: var(--glow), inset 0 0 0 1px rgba(43, 255, 136, 0.12);
-  padding: 24px 22px 18px;
-  position: relative;
-  overflow: hidden;
-}
-
-.container::before {
-  content: "PASSWORD TERMINAL";
-  position: absolute;
-  top: 8px;
-  right: 14px;
-  font-size: 0.7rem;
-  letter-spacing: 0.18em;
-  color: var(--muted);
-  opacity: 0.65;
+  padding: 20px 18px 16px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
 }
 
 header {
   margin-bottom: 8px;
-  border-bottom: 1px solid rgba(43, 255, 136, 0.25);
+  border-bottom: 1px solid var(--border);
   padding-bottom: 10px;
 }
 
 .title-block h1 {
   margin: 6px 0 2px;
-  font-size: 1.5rem;
-  letter-spacing: 0.05em;
-  text-shadow: var(--glow);
+  font-size: 1.45rem;
+  letter-spacing: 0.03em;
 }
 
 .title-block .eyebrow {
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   color: var(--muted);
   margin: 0;
 }
@@ -100,16 +56,15 @@ header {
 .title-block .lead {
   margin: 0;
   color: var(--muted);
-  font-size: 0.92rem;
+  font-size: 0.95rem;
 }
 
 .panel {
   margin-top: 10px;
-  background: linear-gradient(180deg, rgba(43, 255, 136, 0.04), rgba(7, 11, 7, 0.9));
+  background: linear-gradient(180deg, #ffffff, #f8f9f6);
   border-radius: calc(var(--radius) - 2px);
-  border: 1px solid rgba(43, 255, 136, 0.3);
-  box-shadow: inset 0 0 0 1px rgba(43, 255, 136, 0.12);
-  padding: 18px;
+  border: 1px solid var(--border);
+  padding: 16px;
 }
 
 .field-group {
@@ -121,50 +76,43 @@ header {
   justify-content: space-between;
   align-items: center;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
 }
 
 .field-label span {
   color: var(--accent);
   font-weight: 700;
-  text-shadow: 0 0 8px rgba(43, 255, 136, 0.5);
 }
 
 input[type="range"] {
   -webkit-appearance: none;
   width: 100%;
-  height: 8px;
-  background: repeating-linear-gradient(
-    90deg,
-    rgba(43, 255, 136, 0.35),
-    rgba(43, 255, 136, 0.35) 10px,
-    rgba(43, 255, 136, 0.05) 10px,
-    rgba(43, 255, 136, 0.05) 20px
-  );
-  border: 1px solid rgba(43, 255, 136, 0.4);
+  height: 6px;
+  background: #e6ebe2;
   border-radius: 4px;
   outline: none;
   margin-top: 12px;
-  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border);
 }
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 16px;
-  height: 22px;
-  border-radius: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
   background: var(--accent);
-  box-shadow: var(--glow), inset 0 0 0 1px #052608;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 1px var(--accent);
   cursor: pointer;
 }
 
 input[type="range"]::-moz-range-thumb {
-  width: 16px;
-  height: 22px;
-  border-radius: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
   background: var(--accent);
-  box-shadow: var(--glow), inset 0 0 0 1px #052608;
-  border: none;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 1px var(--accent);
   cursor: pointer;
 }
 
@@ -179,25 +127,23 @@ input[type="range"]::-moz-range-thumb {
   align-items: center;
   gap: 10px;
   padding: 10px 12px;
-  background: rgba(43, 255, 136, 0.04);
-  border: 1px solid rgba(43, 255, 136, 0.3);
-  border-radius: 8px;
+  background: #f7f8f5;
+  border: 1px solid var(--border);
+  border-radius: 6px;
   color: var(--text);
   cursor: pointer;
-  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 }
 
 .toggle:hover {
-  transform: translateY(-1px);
-  border-color: var(--accent);
-  box-shadow: var(--glow);
+  background: #eef2ea;
+  border-color: #c7d0c4;
 }
 
 .toggle input[type="checkbox"] {
   accent-color: var(--accent);
   width: 18px;
   height: 18px;
-  filter: drop-shadow(0 0 4px rgba(43, 255, 136, 0.5));
 }
 
 .actions {
@@ -209,43 +155,40 @@ input[type="range"]::-moz-range-thumb {
 
 button {
   border-radius: 6px;
-  border: 1px solid rgba(43, 255, 136, 0.35);
-  padding: 12px 10px;
+  border: 1px solid var(--border);
+  padding: 11px 10px;
   font-weight: 700;
   font-size: 0.95rem;
   cursor: pointer;
-  transition: transform 0.12s ease, box-shadow 0.18s ease, border-color 0.18s ease;
-  background: linear-gradient(180deg, rgba(43, 255, 136, 0.18), rgba(43, 255, 136, 0.04));
+  background: #f7f8f5;
   color: var(--text);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
 }
 
 button:active {
-  transform: translateY(1px) scale(0.995);
+  transform: translateY(1px);
 }
 
 button.primary {
-  background: linear-gradient(180deg, rgba(43, 255, 136, 0.5), rgba(22, 199, 109, 0.35));
-  box-shadow: var(--glow);
-  color: #031703;
-  text-shadow: 0 0 6px rgba(3, 23, 3, 0.6);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #ffffff;
 }
 
 button.primary:hover {
-  border-color: var(--accent);
-  box-shadow: 0 0 20px rgba(43, 255, 136, 0.55);
+  background: #276536;
+  border-color: #276536;
 }
 
 button.ghost {
   background: transparent;
-  color: var(--text);
-  border-style: dashed;
 }
 
 button.ghost:hover {
-  border-color: var(--accent);
-  box-shadow: inset 0 0 0 1px rgba(43, 255, 136, 0.2);
+  border-color: #c7d0c4;
+  background: #eef2ea;
 }
 
 .result label {
@@ -258,21 +201,19 @@ button.ghost:hover {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: rgba(43, 255, 136, 0.05);
-  border: 1px solid rgba(43, 255, 136, 0.35);
+  background: #f7f8f5;
+  border: 1px solid var(--border);
   border-radius: 8px;
   padding: 10px 12px;
-  box-shadow: inset 0 0 0 1px rgba(43, 255, 136, 0.1);
 }
 
 #password {
   flex: 1;
   background: transparent;
   border: none;
-  color: var(--accent);
+  color: var(--text);
   font-size: 0.98rem;
   outline: none;
-  text-shadow: var(--glow);
 }
 
 #password::placeholder {
@@ -283,15 +224,15 @@ button.ghost:hover {
   font-size: 0.8rem;
   color: var(--muted);
   white-space: nowrap;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
 }
 
 .icon-btn {
   width: 34px;
   height: 34px;
   border-radius: 6px;
-  border: 1px solid rgba(43, 255, 136, 0.35);
-  background: rgba(43, 255, 136, 0.08);
+  border: 1px solid var(--border);
+  background: #ffffff;
   color: var(--text);
   font-size: 1rem;
   display: inline-flex;
@@ -300,7 +241,7 @@ button.ghost:hover {
   cursor: pointer;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+  transition: background-color 0.12s ease, border-color 0.12s ease, opacity 0.12s ease;
 }
 
 .icon-btn.visible {
@@ -309,13 +250,12 @@ button.ghost:hover {
 }
 
 .icon-btn:hover {
-  border-color: var(--accent);
-  transform: translateY(-1px);
-  box-shadow: var(--glow);
+  background: #eef2ea;
+  border-color: #c7d0c4;
 }
 
 .hint.success {
-  color: #a9ffba;
+  color: #276536;
 }
 
 .note {
@@ -323,8 +263,8 @@ button.ghost:hover {
   font-size: 0.85rem;
   margin: 12px 0 0;
   line-height: 1.45;
-  background: rgba(43, 255, 136, 0.06);
-  border: 1px dashed rgba(43, 255, 136, 0.3);
+  background: #f7f8f5;
+  border: 1px dashed var(--border);
   border-radius: 6px;
   padding: 10px 12px;
 }
