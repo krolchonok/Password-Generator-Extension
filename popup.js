@@ -1,74 +1,93 @@
-// Function to hash the password using SHA-1
-async function sha1(password) {
-    const encoder = new TextEncoder();
-    const data = encoder.encode(password);
-    const hashBuffer = await crypto.subtle.digest('SHA-1', data);
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-    return hashHex;
+function buildCharacterPool(options) {
+  const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+  const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const numbers = '0123456789';
+  const symbols = '!@#$%^&*()_+~`|}{[]:;?><,./-=';
+
+  let characters = lowercase;
+  if (options.includeUppercase) characters += uppercase;
+  if (options.includeNumbers) characters += numbers;
+  if (options.includeSymbols) characters += symbols;
+  return characters;
 }
 
-// Function to check if password is compromised using HIBP API
-async function checkPasswordHIBP(password) {
-    const hash = await sha1(password);
-    const prefix = hash.slice(0, 5);
-    const suffix = hash.slice(5);
+function generatePasswordString(length, options) {
+  const characters = buildCharacterPool(options);
+  let password = '';
 
-    try {
-        const response = await fetch(`https://api.pwnedpasswords.com/range/${prefix}`);
-        const data = await response.text();
-        const isCompromised = data.includes(suffix.toUpperCase());
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    password += characters[randomIndex];
+  }
 
-        return isCompromised ? "Password has been compromised!" : "Password is safe!";
-    } catch (error) {
-        return "Error checking password security";
-    }
+  return password;
 }
 
-// Modified generatePassword function to check with HIBP
-async function generatePassword() {
-    const length = document.getElementById('password-length').value || 12;
-    const includeUppercase = document.getElementById('include-uppercase').checked;
-    const includeNumbers = document.getElementById('include-numbers').checked;
-    const includeSymbols = document.getElementById('include-symbols').checked;
-
-    const lowercase = 'abcdefghijklmnopqrstuvwxyz';
-    const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const numbers = '0123456789';
-    const symbols = '!@#$%^&*()_+~`|}{[]:;?><,./-=';
-
-    let characters = lowercase;
-    if (includeUppercase) characters += uppercase;
-    if (includeNumbers) characters += numbers;
-    if (includeSymbols) characters += symbols;
-
-    let password = '';
-    for (let i = 0; i < length; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        password += characters[randomIndex];
-    }
-
-    document.getElementById('password').value = password;
-
-    const securityStatus = await checkPasswordHIBP(password);
-    document.getElementById('password-security').innerText = securityStatus;
+function updateLengthValue(length) {
+  document.getElementById('length-value').textContent = length;
 }
 
-// Function to copy the password to the clipboard
+function setCopyHint(text, success = false) {
+  const hint = document.getElementById('copy-hint');
+  hint.textContent = text;
+  hint.classList.toggle('success', success);
+}
+
+function generatePassword() {
+  const length = Number(document.getElementById('password-length').value) || 12;
+  const options = {
+    includeUppercase: document.getElementById('include-uppercase').checked,
+    includeNumbers: document.getElementById('include-numbers').checked,
+    includeSymbols: document.getElementById('include-symbols').checked,
+  };
+
+  const password = generatePasswordString(length, options);
+  document.getElementById('password').value = password;
+  setCopyHint('Не скопирован');
+
+  return password;
+}
+
 function copyPassword() {
-    const password = document.getElementById('password');
-    navigator.clipboard.writeText(password.value).then(() => {
-        alert("Password copied to clipboard!");
-    });
+  const passwordField = document.getElementById('password');
+  if (!passwordField.value) {
+    setCopyHint('Сначала сгенерируйте пароль');
+    return;
+  }
+
+  navigator.clipboard.writeText(passwordField.value).then(() => {
+    setCopyHint('Скопировано', true);
+  });
 }
 
-// Display content after loading
 document.addEventListener('DOMContentLoaded', () => {
-    const loadingScreen = document.getElementById('loading-screen');
-    const mainContent = document.getElementById('main-content');
-    loadingScreen.style.display = 'none';
-    mainContent.style.display = 'block';
+  const lengthInput = document.getElementById('password-length');
+  const passwordField = document.getElementById('password');
+  const inlineGenerateBtn = document.getElementById('inline-generate');
+  const resultField = document.querySelector('.result-field');
 
-    document.getElementById('generate-btn').addEventListener('click', generatePassword);
-    document.getElementById('copy-btn').addEventListener('click', copyPassword);
+  updateLengthValue(lengthInput.value);
+
+  lengthInput.addEventListener('input', (event) => {
+    updateLengthValue(event.target.value);
+    setCopyHint('Не скопирован');
+  });
+
+  document.getElementById('generate-btn').addEventListener('click', generatePassword);
+  document.getElementById('copy-btn').addEventListener('click', copyPassword);
+
+  inlineGenerateBtn.addEventListener('click', () => {
+    generatePassword();
+    passwordField.focus();
+  });
+
+  resultField.addEventListener('focusin', () => {
+    inlineGenerateBtn.classList.add('visible');
+  });
+
+  resultField.addEventListener('focusout', (event) => {
+    if (!resultField.contains(event.relatedTarget)) {
+      inlineGenerateBtn.classList.remove('visible');
+    }
+  });
 });
